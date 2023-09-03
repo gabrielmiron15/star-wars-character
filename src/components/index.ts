@@ -1,8 +1,8 @@
 import CharacterList from './CharacterList';
 import Header from './Header';
-import Layout from './Layout'
+import Wrapper from './Wrapper'
 export {
     CharacterList,
     Header,
-    Layout
+    Wrapper
 }

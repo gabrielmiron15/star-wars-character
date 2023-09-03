@@ -1,26 +1,33 @@
 'use client';
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { fetchData } from "../utils/fetchData";
 import { ICharacter } from "../utils/types";
 import { PEOPLE_API_URL } from '../utils/constants';
 import { format } from 'date-fns';
 import { Card, CardHeader, CardBody, Stack, StackDivider, Heading, Text, Box, SimpleGrid, GridItem, Spinner, Avatar } from '@chakra-ui/react';
-
+import AppContext from '../store/context';
+import Pagination from './Pagination';
 
 export default function CharacterList() {
-    const [characterList, setCharacterList] = useState<ICharacter[] | []>([]);
+    const { characterList, setCharacterList, activePage } = useContext(AppContext);
+    const [isDataLoading, setIsDataLoding] = useState<boolean>(false);
 
     // fetching character list from api on first load of page, here we can use also async/await but promise chain is also a good choose just for one fetch
     useEffect(() => {
-        fetchData({ url: PEOPLE_API_URL }).then(data => { setCharacterList(data?.results) });
-    }, []);
+        setIsDataLoding(true);
+        fetchData({ url: PEOPLE_API_URL, queryParams: { page: activePage } })
+            .then(data => { setCharacterList(data?.results, data?.count); })
+            .finally(
+                () => setIsDataLoding(false)
+            );
+    }, [activePage]);
 
 
     console.log(characterList);
     return (
         <>
             <SimpleGrid columns={{ base: 1, md: 2 }} gap={5}>
-                {!!characterList.length && characterList?.map((character: ICharacter) => (
+                {!!characterList?.length && !isDataLoading && characterList?.map((character: ICharacter) => (
                     <GridItem w='100%' key={character.created}>
 
                         <Card margin='20px 0'>
@@ -60,7 +67,7 @@ export default function CharacterList() {
                     </GridItem>
                 ))}
             </SimpleGrid>
-            { !characterList?.length && <Box {...styledSpinnerWrapper}>
+            { isDataLoading && <Box {...styledSpinnerWrapper}>
                 <Spinner
                     thickness='4px'
                     speed='1.2s'
@@ -71,6 +78,7 @@ export default function CharacterList() {
                 />
             </Box>
             }
+            <Pagination disabled={isDataLoading} />
         </>
     );
 }
