@@ -27,7 +27,7 @@ export default function CharacterList() {
 
     return (
         <>
-            {!isDataLoading && <SearchCharacterInput onSearchTermChange={setSearchTerm} searchTerm={searchTerm} />}
+            <SearchCharacterInput onSearchTermChange={setSearchTerm} searchTerm={searchTerm} />
             <SimpleGrid columns={{ base: 1, md: 2 }} gap={5}>
                 {!!characterList?.length && !isDataLoading && characterList?.map((character: ICharacter) => (
                     <CharacterListCard key={character.created} character={character} />
