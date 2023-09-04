@@ -27,9 +27,16 @@ interface ICharacter {
     url: string;
     vehicles: string[];
 }
+interface IAppStore {
+    characterList?: ICharacter[],
+    activePage: number,
+    totalCharacters: number,
+    searchTerm: string
+}
 
 export type {
     IFetchData,
-    ICharacter
+    ICharacter,
+    IAppStore
 };
 

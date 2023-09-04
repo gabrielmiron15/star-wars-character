@@ -3,9 +3,14 @@ import { PaginationControl } from 'react-bootstrap-pagination-control';
 import AppContext from '../store/context';
 import { Box } from '@chakra-ui/react';
 
-export default ({ disabled }: { disabled: boolean }) => {
+interface Pagination {
+    disabled: boolean,
+    totalCharacters: number,
+    setActivePage: (page: number) => void,
+    activePage: number
+}
 
-    const { totalCharacters, setActivePage, activePage } = useContext(AppContext);
+export default function Pagination({ disabled, totalCharacters, setActivePage, activePage }: Pagination) {
 
     return <Box {...styledBox(disabled)}>
         <PaginationControl
@@ -15,7 +20,7 @@ export default ({ disabled }: { disabled: boolean }) => {
             limit={10}
             changePage={(page) => {
                 if (!disabled) {
-                    setActivePage(page)
+                    setActivePage(Number(page))
                 }
             }}
             ellipsis={1}
