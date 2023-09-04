@@ -13,10 +13,11 @@ export default function Character({ id }: { id: string | string[] | undefined })
     const router = useRouter();
 
     const [isDataLoading, setIsDataLoding] = useState<boolean>(false);
-    const [characterData, setCharacterData] = useState<ICharacter | IObject>({});
-    const [films, setFilms] = useState<IObject[]>([]);
-    const [starships, setStarships] = useState<IObject[]>([]);
-    const [vehicles, setVehicles] = useState<IObject[]>([]);
+    const [err, setErr] = useState<string | undefined>();
+    const [characterData, setCharacterData] = useState<ICharacter | IObject>({ name: '' });
+    const [films, setFilms] = useState<IObject[] | undefined>(undefined);
+    const [starships, setStarships] = useState<IObject[] | undefined>(undefined);
+    const [vehicles, setVehicles] = useState<IObject[] | undefined>(undefined);
 
     // fetching character list from api on first load of page, here we can use also async/await but promise chain is also a good choose just for one fetch
     useEffect(() => {
@@ -26,6 +27,7 @@ export default function Character({ id }: { id: string | string[] | undefined })
                 url: `${PEOPLE_API_URL}/${id}`
             })
                 .then(data => { setCharacterData(data); })
+                .catch((e) => setErr(e))
                 .finally(
                     () => setIsDataLoding(false)
                 );
@@ -34,27 +36,21 @@ export default function Character({ id }: { id: string | string[] | undefined })
 
     useEffect(() => {
         if (characterData?.films) {
-            fetchMultipleUrls(characterData?.starships).then(data => setFilms(data)
-
-            )
+            fetchMultipleUrls(characterData?.starships).then(data => setFilms(data))
         }
     }, [
         characterData?.films
     ]);
     useEffect(() => {
         if (characterData?.starships) {
-            fetchMultipleUrls(characterData?.starships).then(data => setStarships(data)
-
-            )
+            fetchMultipleUrls(characterData?.starships).then(data => setStarships(data))
         }
     }, [
         characterData?.starships
     ]);
     useEffect(() => {
         if (characterData?.vehicles) {
-            fetchMultipleUrls(characterData?.vehicles).then(data => setVehicles(data)
-
-            )
+            fetchMultipleUrls(characterData?.vehicles).then(data => setVehicles(data))
         }
     }, [
         characterData?.vehicles
@@ -76,7 +72,7 @@ export default function Character({ id }: { id: string | string[] | undefined })
             </Box>
             }
             {!isDataLoading && !!characterData.name && <CharacterCard character={characterData} {...{ films, vehicles, starships }} />}
-            {!characterData?.name && !isDataLoading && (
+            {err && !isDataLoading && (
                 <Alert status='warning'>
                     <AlertIcon />
                     Woops, something went wrong, please try again latere!

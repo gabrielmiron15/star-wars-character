@@ -4,9 +4,9 @@ import { Card, CardHeader, CardBody, Stack, StackDivider, Heading, Text, Box, Av
 
 interface CharacterCard {
     character: ICharacter | IObject,
-    vehicles: IObject,
-    starships: IObject,
-    films: IObject,
+    vehicles: IObject[] | undefined,
+    starships: IObject[] | undefined,
+    films: IObject[] | undefined,
 }
 export default function CharacterCard({ character, vehicles, starships, films }: CharacterCard) {
     return (
@@ -66,7 +66,7 @@ export default function CharacterCard({ character, vehicles, starships, films }:
                             Vehicles
                     </Heading>
                         <Text pt='2' fontSize='sm'>
-                            {vehicles?.map(({ name }: IObject) => <span className={'db'} key={name}>{name}</span>)}
+                            {vehicles ? vehicles?.map(({ name }: IObject) => <span className={'db'} key={name}>{name}</span>) : 'loading...'}
                         </Text>
                     </Box>
                     <Box>
@@ -74,7 +74,7 @@ export default function CharacterCard({ character, vehicles, starships, films }:
                             Films
                     </Heading>
                         <Text pt='2' fontSize='sm'>
-                            {films?.map(({ name }: IObject) => <span className={'db'} key={name}>{name}</span>)}
+                            {films ? films?.map(({ name }: IObject) => <span className={'db'} key={name}>{name}</span>) : 'loading...'}
                         </Text>
                     </Box>
                     <Box>
@@ -82,7 +82,7 @@ export default function CharacterCard({ character, vehicles, starships, films }:
                             Starships
                     </Heading>
                         <Text pt='2' fontSize='sm'>
-                            {starships?.map(({ name }: IObject) => <span className={'db'} key={name}>{name}</span>)}
+                            {starships ? starships?.map(({ name }: IObject) => <span className={'db'} key={name}>{name}</span>) : 'loading...'}
                         </Text>
                     </Box>
 
