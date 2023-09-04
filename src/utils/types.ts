@@ -28,13 +28,14 @@ interface ICharacter {
     vehicles: string[];
 }
 interface IAppStore {
-    characterList?: ICharacter[],
+    characterList: ICharacter[],
     activePage: number,
     totalCharacters: number,
-    searchTerm: string
+    searchTerm: string,
 }
 
 export type {
+    IObject,
     IFetchData,
     ICharacter,
     IAppStore

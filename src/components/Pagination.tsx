@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { PaginationControl } from 'react-bootstrap-pagination-control';
-import AppContext from '../store/context';
+import charactersStoreContext from '../store/charactersStoreContext';
 import { Box } from '@chakra-ui/react';
 
 interface Pagination {

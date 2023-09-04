@@ -1,12 +1,16 @@
 import CharacterListCard from './CharacterListCard';
+import CharacterCard from './CharacterCard'
 import Header from './Header';
-import StoreWrapper from './StoreWrapper';
+import CharactersStoreWrapper from './CharactersStoreWrapper';
+import CharacterStoreWrapper from './CharacterStoreWrapper';
 import Pagination from './Pagination';
 import SearchCharacterInput from './SearchCharacterInput';
 export {
     CharacterListCard,
+    CharacterCard,
     Header,
-    StoreWrapper,
+    CharactersStoreWrapper,
+    CharacterStoreWrapper,
     Pagination,
     SearchCharacterInput
 }

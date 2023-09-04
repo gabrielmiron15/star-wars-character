@@ -2,18 +2,23 @@
 import { ICharacter } from "../utils/types";;
 import { format } from 'date-fns';
 import { Card, CardHeader, CardBody, Stack, StackDivider, Heading, Text, Box, GridItem, Avatar } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation'
 
 interface CharacterListCard {
     character: ICharacter,
 }
 
 export default function CharacterListCard({ character }: CharacterListCard) {
+    const router = useRouter();
 
+    const handleClickCard = () => {
+        router.push(`/character/${character.url?.match(/\d+/g)}`)
+    }
     return (
 
         <GridItem w='100%'>
 
-            <Card margin='20px 0'>
+            <Card margin='20px 0' cursor="pointer" onClick={handleClickCard}>
                 <CardHeader>
                     <Heading size='md' {...styledHeading}><Avatar bg='teal.500' margin='0 20px 0 0' />{character.name}</Heading>
                 </CardHeader>

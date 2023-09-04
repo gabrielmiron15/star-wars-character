@@ -1,7 +1,7 @@
 import { Container } from '@chakra-ui/react'
-import AppContext from '../store/context';
+import CharactersStoreContext from '../store/charactersStoreContext';
 import { useState } from 'react';
-import { ICharacter, IAppStore } from '../utils/types';
+import { ICharacter, IAppStore, IObject } from '../utils/types';
 
 export default function StoreWrapper({ children }: { children: React.ReactElement }) {
     const [appStore, setAppStore] = useState<IAppStore>({
@@ -31,11 +31,10 @@ export default function StoreWrapper({ children }: { children: React.ReactElemen
             activePage: 1
         })
     }
-    console.log(appStore, '------');
 
     return (
-        <AppContext.Provider value={{ ...appStore, setCharacterList, setActivePage, setSearchTerm }} >
+        <CharactersStoreContext.Provider value={{ ...appStore, setCharacterList, setActivePage, setSearchTerm } as IObject} >
             <Container maxW='var(--chakra-sizes-container-md)'>{children}</Container>
-        </AppContext.Provider>
+        </CharactersStoreContext.Provider>
     )
 }

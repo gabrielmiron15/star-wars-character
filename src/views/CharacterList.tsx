@@ -4,11 +4,11 @@ import { fetchData } from "../utils/fetchData";
 import { ICharacter } from "../utils/types";
 import { PEOPLE_API_URL } from '../utils/constants';
 import { Box, SimpleGrid, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
-import AppContext from '../store/context';
+import CharactersStoreContext from '../store/charactersStoreContext';
 import { CharacterListCard, Pagination, SearchCharacterInput } from '../components';
 
 export default function CharacterList() {
-    const { characterList, totalCharacters, activePage, searchTerm, setCharacterList, setActivePage, setSearchTerm } = useContext(AppContext);
+    const { characterList, totalCharacters, activePage, searchTerm, setCharacterList, setActivePage, setSearchTerm } = useContext(CharactersStoreContext);
     const [isDataLoading, setIsDataLoding] = useState<boolean>(false);
 
     // fetching character list from api on first load of page, here we can use also async/await but promise chain is also a good choose just for one fetch
@@ -44,7 +44,7 @@ export default function CharacterList() {
                 />
             </Box>
             }
-            {!characterList?.length && !isDataLoading && (
+            {!characterList?.length && !isDataLoading && !!searchTerm?.length && (
                 <Alert status='warning'>
                     <AlertIcon />
                     Seems like no data is maching your criteria

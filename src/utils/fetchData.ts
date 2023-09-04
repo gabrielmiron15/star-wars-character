@@ -9,4 +9,9 @@ async function fetchData({ method = 'GET', url, body, queryParams = {} }: IFetch
     }
 }
 
-export { fetchData };
+async function fetchMultipleUrls(urls: string[]) {
+    return await Promise.all(urls.map(url => fetchData({ url })));
+}
+
+export { fetchData, fetchMultipleUrls };
+

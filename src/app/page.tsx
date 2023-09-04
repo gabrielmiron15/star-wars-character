@@ -1,7 +1,7 @@
 'use client'
-import { Header, StoreWrapper } from '../components';
+import { Header, CharactersStoreWrapper } from '../components';
 import { CharacterList } from '../views';
-import styles from './page.module.css'
+import styles from './page.module.css';
 import * as React from 'react'
 import { ChakraProvider } from '@chakra-ui/react'
 
@@ -10,12 +10,12 @@ export default function Home() {
   return (
     <>
       <ChakraProvider>
-        <StoreWrapper>
+        <CharactersStoreWrapper>
           <>
             <Header title={title} />
             <CharacterList />
           </>
-        </StoreWrapper>
+        </CharactersStoreWrapper>
       </ChakraProvider>
     </>
   )
